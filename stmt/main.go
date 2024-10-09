@@ -59,17 +59,18 @@ func hugeInsert(db *sql.DB) {
 	begin := time.Now()
 
 	for i := 0; i < 100000; i++ {
-		stmt.Exec("宋江"+strconv.Itoa(i+1), "山东", "梁山", "2010-12-23")
+		_, err := stmt.Exec("宋江"+strconv.Itoa(i+1), "山东", "梁山", "2010-12-23")
+		common.CheckErr(err)
 	}
 	fmt.Printf("time=%d ms\n", time.Since(begin).Milliseconds())
 }
 func main() {
-	db, err := sql.Open("mysql", "teng:5570709@(chent7.top)/test?charset=utf8")
+	db, err := sql.Open("mysql", "teng:5570709@/test?charset=utf8")
 	common.CheckErr(err)
 	//insert(db)
 	//replace(db)
 	//update(db)
 	//delete(db)
-	query(db)
-	//hugeInsert(db)
+	//query(db)
+	hugeInsert(db)
 }
